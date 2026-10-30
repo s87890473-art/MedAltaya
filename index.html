@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мёд Алтая - Заказ</title>
+    <style>
+        /* --- Стили для фона --- */
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            
+            /* Выравниваем по левому краю, чтобы можно было сдвигать вправо отступом */
+            display: flex;
+            justify-content: flex-start; 
+            align-items: flex-start; 
+            
+            /* Фоновое изображение */
+            background-image: url('background.jpg'); 
+            background-size: cover; 
+            background-position: center; 
+            background-attachment: fixed; 
+        }
+
+        /* --- Уменьшенная стеклянная панель --- */
+        .container {
+            background: rgba(255, 255, 255, 0.88); 
+            backdrop-filter: blur(10px); 
+            -webkit-backdrop-filter: blur(10px);
+            padding: 15px 12px; 
+            border-radius: 12px; 
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+            text-align: center;
+            max-width: 220px; 
+            width: 90%;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            
+            /* Опускаем панель вниз на ~3 см */
+            margin-top: 115px; 
+            margin-bottom: 30px; 
+            
+            /* Сдвигаем панель вправо на ~7 см (примерно 265px) */
+            margin-left: 265px; 
+        }
+
+        h1 {
+            font-size: 15px; 
+            margin-top: 0;
+            margin-bottom: 5px;
+            color: #5c3a21;
+            line-height: 1.2;
+        }
+
+        p {
+            font-size: 11px; 
+            color: #555;
+            margin-bottom: 15px;
+            margin-top: 5px;
+        }
+
+        /* --- Кнопки --- */
+        .btn-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px; 
+        }
+
+        .btn {
+            padding: 10px 12px; 
+            border: none;
+            border-radius: 30px;
+            font-size: 12px; 
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 3px 8px rgba(0,0,0,0.3);
+        }
+
+        .btn-whatsapp svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .btn-whatsapp {
+            background-color: #25D366;
+            color: white;
+            box-shadow: 0 3px 8px rgba(37, 211, 102, 0.4);
+        }
+
+        .btn-products {
+            background-color: #c98f52;
+            color: white;
+            box-shadow: 0 3px 8px rgba(201, 143, 82, 0.4);
+        }
+
+        /* Выпадающий список */
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #fff;
+            min-width: 100%;
+            box-shadow: 0px 6px 12px 0px rgba(0,0,0,0.2);
+            z-index: 10;
+            border-radius: 8px;
+            margin-top: 5px;
+            overflow: hidden;
+            text-align: left;
+            border: 1px solid #eee;
+        }
+
+        .dropdown-content a {
+            color: #4a3b32;
+            padding: 10px 12px; 
+            text-decoration: none;
+            display: block;
+            transition: background 0.2s;
+            font-size: 12px; 
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .dropdown-content a:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #fdf5e6; 
+            color: #8b5a2b;
+        }
+
+        .show {
+            display: block;
+        }
+
+        /* --- Аудиоплеер --- */
+        .audio-wrapper {
+            margin-top: 15px;
+            background: rgba(255, 255, 255, 0.5);
+            padding: 8px; 
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.8);
+        }
+
+        audio {
+            width: 100%;
+            outline: none;
+            border-radius: 5px;
+            height: 30px; 
+        }
+
+        .audio-label {
+            font-size: 10px; 
+            color: #555;
+            margin-bottom: 4px;
+            display: block;
+            font-weight: bold;
+        }
+        
+        /* Адаптивность для маленьких экранов (чтобы панель не улетала за край) */
+        @media (max-width: 768px) {
+            .container {
+                margin-left: 0;
+                margin-top: 50px;
+                margin-right: auto; /* Центрирование на мобильных */
+                position: relative;
+            }
+            body {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Натуральный мёд и дары Алтая</h1>
+        <p>Оформите заказ быстро и удобно</p>
+
+        <div class="btn-group">
+            <!-- Кнопка WhatsApp -->
+            <a href="https://wa.me/79627949136" target="_blank" class="btn btn-whatsapp">
+                <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12.01 2.02C6.54 2.02 2.11 6.45 2.11 11.92C2.11 13.86 2.66 15.74 3.68 17.37L2.02 22.02L6.79 20.39C8.34 21.34 10.12 21.84 11.95 21.84C17.42 21.84 21.85 17.41 21.85 11.94C21.85 6.47 17.42 2.04 11.95 2.04H12.01V2.02ZM17.57 16.3C17.35 16.92 16.2 17.47 15.68 17.5C15.16 17.53 14.53 17.8 12.01 16.83C9.49 15.86 7.88 13.44 7.73 13.26C7.58 13.08 6.53 11.79 6.53 10.45C6.53 9.11 7.25 8.46 7.51 8.18C7.77 7.9 8.06 7.85 8.25 7.85C8.44 7.85 8.63 7.85 8.81 7.86C9.02 7.87 9.22 7.84 9.4 8.24C9.58 8.64 10.07 9.94 10.12 10.05C10.17 10.16 10.2 10.29 10.12 10.47C10.04 10.65 9.86 10.87 9.74 11.03C9.62 11.19 9.48 11.36 9.64 11.64C9.8 11.92 10.41 12.91 11.28 13.68C12.39 14.65 13.29 14.95 13.57 15.06C13.85 15.17 14.01 15.13 14.15 14.98C14.29 14.83 14.75 14.29 14.9 14.07C15.05 13.85 15.22 13.87 15.4 13.94C15.58 14.01 16.67 14.55 16.86 14.64C17.05 14.73 17.16 14.79 17.21 14.9C17.26 15.01 17.26 15.54 17.57 16.3Z" fill="currentColor"/>
+                </svg>
+                Заказать в WhatsApp
+            </a>
+
+            <!-- Выпадающий список товаров -->
+            <div style="position: relative;">
+                <button onclick="toggleDropdown(event)" class="btn btn-products" style="width: 100%;">
+                    🌿 Выбрать товар ▼
+                </button>
+                <div id="myDropdown" class="dropdown-content">
+                    <a href="https://wa.me/79627949136?text=Здравствуйте!%20Хочу%20заказать%20Мёд" target="_blank">🍯 Мед</a>
+                    <a href="https://wa.me/79627949136?text=Здравствуйте!%20Хочу%20заказать%20Белый%20гриб" target="_blank">🍄 Белый гриб</a>
+                    <a href="https://wa.me/79627949136?text=Здравствуйте!%20Хочу%20заказать%20Орех" target="_blank">🌰 Орех</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Аудиоплеер -->
+        <div class="audio-wrapper">
+            <span class="audio-label">🎵 Музыка:</span>
+            <audio controls>
+                <source src="music.mp3" type="audio/mpeg">
+                Ваш браузер не поддерживает аудиоэлемент.
+            </audio>
+        </div>
+    </div>
+
+    <script>
+        function toggleDropdown(event) {
+            event.stopPropagation(); 
+            document.getElementById("myDropdown").classList.toggle("show");
+        }
+
+        window.onclick = function(event) {
+            var dropdowns = document.getElementsByClassName("dropdown-content");
+            for (var i = 0; i < dropdowns.length; i++) {
+                var openDropdown = dropdowns[i];
+                if (openDropdown.classList.contains('show')) {
+                    openDropdown.classList.remove('show');
+                }
+            }
+        }
+    </script>
+
+</body>
+</html>
